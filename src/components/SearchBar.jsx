@@ -1,25 +1,27 @@
-import { useEffect, useRef } from 'react';
+import {useState} from "react"
 import styled from 'styled-components'
 import {FiSearch} from "react-icons/fi";
 import { useDictionaryContext } from '../context/dictionary_context';
 
 const SearchBar = () => {
-  const {selectedFont, fetchWord} = useDictionaryContext();
-  const searchContainer = useRef(null);
-
-  useEffect(() => {
-    searchContainer.current.style.fontFamily = selectedFont;
-  }, [selectedFont])
+  const [word, setWord] = useState("");
+  const {fetchWord} = useDictionaryContext();
 
   return (
     <Wrapper>
       <div className="section-center">
         <form onSubmit={(e) => {
           e.preventDefault();
-          fetchWord(searchContainer.current.value);
+          if(word) {
+            fetchWord(word);
+          }
         }} className="search-container">
         <input type="text" placeholder="Search for a word" className="search-input" 
-        ref={searchContainer}
+        onInput={(e) => {
+        setWord(e.target.value)
+        }
+        
+        }
         />
         <button className="btn">
           <FiSearch className='search-icon'/>
@@ -31,7 +33,7 @@ const SearchBar = () => {
   )
 }
 const Wrapper = styled.div`
-  .search-container {
+.search-container {
   background: var(--element-bcg);
   border-radius: 10px;
   margin-top: 1.2rem;
@@ -60,13 +62,12 @@ const Wrapper = styled.div`
   font-size: 1.2rem;
   color: var(--clr-font);
   display: block;
+  font-family: var(--app-font);
 }
 
 .btn {
   background: transparent;
   box-shadow: 0 0 0 0;
 }
-
-
 `
 export default SearchBar

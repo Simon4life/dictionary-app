@@ -8,7 +8,7 @@ const board_reducer = (state, action) => {
       }
     }
     return {
-      ...state, wordData: action.payload, errMsg: undefined, 
+      ...state, wordData: action.payload, errMsg: undefined, audioUrl: null
     }
   }
   if(action.type === 'UPDATE_SEARCH_TERM') {
@@ -18,7 +18,7 @@ const board_reducer = (state, action) => {
     return {...state, errMsg: action.payload};
   }
   if(action.type === "FONT_CHANGE") {
-    return {...state, selectedFont: action.payload}
+    return {...state, font: action.payload}
   }
   if(action.type  === "THEME_CHANGE") {
     return {...state, theme: action.payload}

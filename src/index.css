@@ -15,7 +15,7 @@ Variables
   --clr-bcg: #F2F2F2;
   --font-clr: hsl(200, 15%, 8%);
   --element-bcg: hsl(0, 0%, 100%);
-
+  --app-font: sans-serif;
   --transition: all 0.3s linear;
   --spacing: 0.1rem;
   --radius: 0.25rem;
@@ -55,13 +55,12 @@ Global Styles
 }
 
 body {
-  font-family: sans-serif;
+  font-family: var(--app-font);
   background: var(--clr-bcg);
   color: var(--clr-font);
   line-height: 1.5;
   font-size: 0.875rem;
   margin: 0 auto;
-
   padding: 0 1rem;
 }
 

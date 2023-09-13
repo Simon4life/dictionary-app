@@ -1,14 +1,27 @@
 import styled from "styled-components";
+import { useEffect, useRef } from "react";
 import { useDictionaryContext } from "../context/dictionary_context"; 
 
 const FontSelect = () => {
-  const {handleFontChange} = useDictionaryContext();
+  const {handleFontChange, updateFont, font} = useDictionaryContext();
+  const fontList = ["sans", "monospace", "verdana"];
+
+    
+    useEffect(() => {
+      const selectedFont = localStorage.getItem("font");
+      if(selectedFont) {
+        updateFont(selectedFont)
+      }
+    }, [])
+
     return (
       <Wrapper>
-        <select onChange={handleFontChange} >
-          <option value="Sans Serif">Sans</option>
-          <option value="Monospace">Monospace</option>
-          <option value="verdana">verdana</option>
+        <select  onChange={handleFontChange} value={font}>
+        {
+          fontList.map((item, idx) => {
+            return <option key={idx} className="option" value={item}>{item}</option>
+          })
+        }
         </select>
       </Wrapper> 
     )

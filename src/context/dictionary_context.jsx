@@ -8,7 +8,7 @@ const initialState = {
   searchTerm: "",
   wordData: {},
   errMsg: undefined,
-  fontSelected: "sans serif",
+  font: localStorage.getItem("font") || "verdana",
   theme: "light-theme",
   audioUrl: null
 }
@@ -27,7 +27,7 @@ export const DictionaryProvider = ({children}) => {
     try {
     const response = await axios(`${url}${word}`)
     const data = await response.data;
-    console.log(data)
+
     dispatch({type: "FETCH_WORD", payload: data[0]}); 
     } catch (error) {
       if(error.message === "Network Error") {
@@ -43,11 +43,18 @@ export const DictionaryProvider = ({children}) => {
   }
 
   const handleFontChange = (e) => {
-    document.body.style.fontFamily = e.target.value
-    dispatch({type: "FONT_CHANGE", payload: e.target.value});
+    const selectedFont = e.target.value;
+    document.documentElement.style.setProperty("--app-font", selectedFont);
+    localStorage.setItem("font", selectedFont)
+    dispatch({type: "FONT_CHANGE", payload: selectedFont});
   }
 
-  return <DictionaryContext.Provider value={{...state, fetchWord, updateSearchTerm, handleFontChange, handleThemeChange}}>{children}</DictionaryContext.Provider>
+  const updateFont = (font) => {
+    document.documentElement.style.setProperty("--app-font", font);
+    dispatch({type: "FONT_CHANGE", payload: font})
+  }
+
+  return <DictionaryContext.Provider value={{...state, fetchWord, updateSearchTerm, handleFontChange, handleThemeChange, updateFont}}>{children}</DictionaryContext.Provider>
 }
 
 export const useDictionaryContext = () => {
