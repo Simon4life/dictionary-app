@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-
 import { useDictionaryContext } from "../context/dictionary_context";
+
 const ToggleTheme = () => {
   const {theme, handleThemeChange} = useDictionaryContext();
 
@@ -87,7 +87,7 @@ const Wrapper = styled.div`
   position: absolute;
   top: 0;
   bottom: 0;
-  right: 40px;
+  right: 30px;
   border: 0 solid #bbb;
   border-radius: 20px;
   transition: all 0.3s ease-in 0s;

@@ -10,7 +10,8 @@ const initialState = {
   errMsg: undefined,
   font: localStorage.getItem("font") || "verdana",
   theme: "light-theme",
-  audioUrl: null
+  audioUrl: null, 
+  isLoading: false
 }
 
 export const DictionaryProvider = ({children}) => {
@@ -24,15 +25,17 @@ export const DictionaryProvider = ({children}) => {
   }
 
   const fetchWord = async (word) => {
+    dispatch({type: "START_LOADING"})
     try {
     const response = await axios(`${url}${word}`)
     const data = await response.data;
-
     dispatch({type: "FETCH_WORD", payload: data[0]}); 
     } catch (error) {
       if(error.message === "Network Error") {
+        dispatch({type: "STOP_LOADING"})
         dispatch({type: "ERROR", payload: `Network Error, Pls Check your connection`})
       } else if(error.response.status === 404) {
+        dispatch({type: "STOP_LOADING"})
         dispatch({type: "ERROR", payload: "Word Not Found"})
       }
     } 

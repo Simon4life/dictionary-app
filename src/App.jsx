@@ -12,7 +12,6 @@ function App() {
       <Navbar/>
       <SearchBar/>
       <WordContainer/>
-      <WordMeaning/>
     </main>
   )
 }

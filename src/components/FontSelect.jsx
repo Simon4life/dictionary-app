@@ -5,13 +5,11 @@ import { useDictionaryContext } from "../context/dictionary_context";
 const FontSelect = () => {
   const {handleFontChange, updateFont, font} = useDictionaryContext();
   const fontList = ["sans", "monospace", "verdana"];
-
-    
-    useEffect(() => {
-      const selectedFont = localStorage.getItem("font");
-      if(selectedFont) {
-        updateFont(selectedFont)
-      }
+  useEffect(() => {
+    const selectedFont = localStorage.getItem("font");
+    if(selectedFont) {
+      updateFont(selectedFont)
+    }
     }, [])
 
     return (

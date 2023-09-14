@@ -8,39 +8,37 @@ const WordMeaning = () => {
   if(wordData.meanings) {
     const  {meanings, sourceUrls} = wordData;
     return (
-    <Wrapper className="section-center">
-      {
-        meanings.map((item, idx) => {
+      <Wrapper>
+       {
+        meanings.map((item, index) => {
           const {partOfSpeech, definitions} = item;
-          return (
-            <article key={idx}>
-                <div className="title-container">
-                  <h4>{partOfSpeech}</h4>
-                  <hr></hr>
-                </div>
-                <p>Meaning</p>
-                <ul>
-                  {
-                    definitions.map(item => {
-                      return (
-                        <li>{item.definition}</li>
-                      )
-                    })
-                  }
-               </ul>
-           <article>
-        {item.synonyms.length > 0 ? <p>Synonyms {item.synonyms.map(item => <a>{item}</a>)}</p> : null}
-        
-      </article>
-      </article>
-          )
+          return <article>
+            <div className="title-container">
+              <h4>{partOfSpeech}</h4>
+              <hr />
+            </div>
+            <p>meaning</p>
+            <ul>
+              {
+                definitions.map((item, index) => {
+                  return <li key={index}>{item.definition}</li>
+                })
+              }
+            </ul>
+              {
+                item.synonyms.length > 0 ? <p><span className="special">Synonyms</span> {item.synonyms.map((syn, index) => {
+                  return index === item.length - 1 ? item : `${syn}, ` 
+                })}</p> : null
+              }
+          </article>
         })
-      }
-      <hr/>
-      <SourceUlrs url={sourceUrls}/>
-  </Wrapper>
-)
-}
+        }
+        <hr />
+        <SourceUlrs url={sourceUrls}/>
+      </Wrapper>
+    )
+  }
+    
 }
 
 const Wrapper = styled.div`
@@ -54,13 +52,14 @@ const Wrapper = styled.div`
     hr {
       width: 100%;
       display: inline-block;
+      color: hsl(0, 0%, 0%);
     }
   }
   p {
     margin-bottom: .4rem;
   }
-  p, ul {
-    color: var(--grey-200);
+   p, h4, ul {
+    color: var(--clr-font)
 
   }
   article {
@@ -68,6 +67,10 @@ const Wrapper = styled.div`
     color: var(--font-clr);
     ul li {
       margin-left: 1.5rem;
+    }
+    .special {
+      font-size: 1.2rem;
+      color: var(--purple-200);
     }
   }
 `
